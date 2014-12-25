@@ -15,7 +15,7 @@
                   <HBox alignment="CENTER_LEFT" spacing="5.0">
                      <children>
                         <TextField fx:id="txtDBPath" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="btnBrowse" mnemonicParsing="false" text="Browse" />
+                        <Button fx:id="btnBrowse" mnemonicParsing="false" onAction="#onActionBtnBrowse" text="Browse" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -35,6 +35,15 @@
                               <VBox>
                                  <children>
                                     <WebView fx:id="wvMain" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
+                                    <HBox alignment="CENTER_RIGHT" spacing="5.0" VBox.vgrow="NEVER">
+                                       <children>
+                                          <Button fx:id="btnClear" mnemonicParsing="false" onAction="#onActionBtnClear" text="Clear" />
+                                          <Button fx:id="btnExecute" mnemonicParsing="false" onAction="#onActionBtnExecute" text="executeQuery" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </HBox>
                                  </children>
                                  <padding>
                                     <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />

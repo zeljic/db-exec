@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import com.zeljic.dbexec.uil.Loader;
+import com.zeljic.dbexec.utils.Holder;
 import com.zeljic.dbexec.utils.R;
 
 public class Boot extends Application
@@ -13,7 +14,7 @@ public class Boot extends Application
 	@Override
 	public void start(Stage stage) throws Exception
 	{
-		Loader loader = Loader.setInstance("Boot", stage, R.get("/fxml/Boot.fxml"));
+		Loader loader = Loader.setInstance(Holder.BOOT, stage, R.get("/fxml/Boot.fxml"));
 		stage.setScene(loader.getScene());
 		stage.setTitle("Database Exec");
 		stage.setMinWidth(800);

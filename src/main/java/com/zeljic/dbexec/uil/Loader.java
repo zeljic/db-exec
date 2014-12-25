@@ -46,6 +46,11 @@ public class Loader
 		return tmp;
 	}
 
+	public static Loader setInstance(String name, URL path)
+	{
+		return setInstance(name, null, path);
+	}
+
 	public static Loader getInstance(String name)
 	{
 		return _loaders.get(name);
@@ -54,6 +59,11 @@ public class Loader
 	public <T> T getController(Class<T> clazz)
 	{
 		return clazz.cast(_loader.getController());
+	}
+
+	public void setStage(Stage stage)
+	{
+		_stage = stage;
 	}
 
 	public Stage getStage()
@@ -71,5 +81,4 @@ public class Loader
 		Node node = getScene().lookup(selector);
 		return node == null ? null : clazz.cast(node);
 	}
-
 }
