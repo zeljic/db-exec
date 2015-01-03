@@ -14,6 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 
+import com.zeljic.dbexec.db.Row;
+import com.zeljic.dbexec.db.SQLite3Worker;
 import com.zeljic.dbexec.uil.Loader;
 import com.zeljic.dbexec.utils.Holder;
 import com.zeljic.dbexec.utils.R;
@@ -27,7 +29,7 @@ public class BootController implements Initializable
 	private SplitPane spMain;
 
 	@FXML
-	private TableView<Object> tvMain;
+	private TableView<Row> tvMain;
 
 	@FXML
 	private TextField txtDBPath;
@@ -63,5 +65,13 @@ public class BootController implements Initializable
 	public void onActionBtnExecute()
 	{
 		String query = (String) wvMain.getEngine().executeScript("editor.getValue();");
+		SQLite3Worker worker = new SQLite3Worker(txtDBPath.getText());
+		try
+		{
+			worker.getList(query);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 }
