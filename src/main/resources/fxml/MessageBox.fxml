@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeljic.dbexec.controllers.MessageBoxController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeljic.dbexec.controllers.MessageBoxController">
    <children>
       <VBox alignment="CENTER_RIGHT" layoutX="8.0" layoutY="8.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="8.0">
          <children>
@@ -20,9 +22,12 @@
                         <Insets />
                      </HBox.margin>
                   </ImageView>
-                  <VBox prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                  <VBox spacing="5.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label fx:id="lblTitle" text="Title" VBox.vgrow="ALWAYS" />
+                        <Label fx:id="lblTitle" text="Title" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font></Label>
                         <Label fx:id="lblMessage" text="Message" wrapText="true" VBox.vgrow="ALWAYS" />
                      </children>
                   </VBox>

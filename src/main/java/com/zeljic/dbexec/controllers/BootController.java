@@ -18,8 +18,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 
+import com.zeljic.dbexec.cmps.MessageBox;
+import com.zeljic.dbexec.cmps.MessageBox.Type;
 import com.zeljic.dbexec.db.Row;
-import com.zeljic.dbexec.db.SQLite3Worker;
+import com.zeljic.dbexec.db.connectors.SQLite3Connector;
 import com.zeljic.dbexec.uil.Loader;
 import com.zeljic.dbexec.utils.Holder;
 import com.zeljic.dbexec.utils.R;
@@ -56,7 +58,7 @@ public class BootController implements Initializable
 		File f = fc.showOpenDialog(Loader.getInstance(Holder.BOOT).getStage());
 
 		if (f != null)
-			txtDBPath.setText(f.getPath().replace("\\", "/"));
+			txtDBPath.setText(f.getPath());
 	}
 
 	@FXML
@@ -71,13 +73,18 @@ public class BootController implements Initializable
 		tvMain.getColumns().clear();
 
 		String query = (String) wvMain.getEngine().executeScript("editor.getValue();");
-		final SQLite3Worker worker = new SQLite3Worker();
-		worker.setDBPath(txtDBPath.getText());
+		final SQLite3Connector connector = new SQLite3Connector();
+		connector.setFilePath(txtDBPath.getText());
 
 		new Thread(() -> {
 
-			worker.executeQuery(query);
-			List<String> columns = worker.getColumns();
+			if(!connector.executeQuery(query))
+			{
+				MessageBox.getInstance().show("SQL ERROR: Code " + connector.getErrorCode(), connector.getErrorMessage(), Type.ERROR, Loader.getInstance(Holder.BOOT).getStage());
+				return;
+			}
+
+			List<String> columns = connector.getColumns();
 			List<TableColumn<Row, String>> storage = new ArrayList<TableColumn<Row, String>>();
 
 			for (int i = 0, size = columns.size(); i < size; i++)
@@ -92,9 +99,8 @@ public class BootController implements Initializable
 			Platform.runLater(() -> {
 				tvMain.getItems().clear();
 				tvMain.getColumns().addAll(storage);
-				tvMain.setItems(worker.getRows());
+				tvMain.setItems(connector.getRows());
 			});
 		}).start();
-
 	}
 }

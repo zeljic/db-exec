@@ -16,6 +16,6 @@ mvn clean package assembly:single
 
 Run .jar executable
 ```bash
-java -jar "target\DB Exec v.x.x.x-jar-with-dependencies.jar"
+java -jar "target/DB Exec v.x.x.x-jar-with-dependencies.jar"
 ```
 where x.x.x is version of db-exec.

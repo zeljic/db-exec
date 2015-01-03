@@ -2,6 +2,7 @@ package com.zeljic.dbexec.cmps;
 
 import java.io.InputStream;
 
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,7 +26,9 @@ public class MessageBox
 
 	protected MessageBox()
 	{
-		loader = Loader.setInstance(Holder.MESSAGEBOX, R.get("/fxml/MessageBox.fxml"));
+		Platform.runLater(() -> {
+			loader = Loader.setInstance(Holder.MESSAGEBOX, R.get("/fxml/MessageBox.fxml"));
+		});
 	}
 
 	public static MessageBox getInstance()
@@ -38,40 +41,44 @@ public class MessageBox
 
 	public void show(String title, String message, Type type, Window owner)
 	{
-		Stage stage = new Stage();
+		Platform.runLater(() -> {
+			Stage stage = new Stage();
 
-		loader.setStage(stage);
+			loader.setStage(stage);
 
-		stage.setScene(loader.getScene());
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.initOwner(owner);
-		stage.setResizable(false);
+			stage.setScene(loader.getScene());
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(owner);
+			stage.setResizable(false);
+			stage.setTitle(title);
 
-		loader.lookup("#lblTitle", Label.class).setText(title);
-		loader.lookup("#lblMessage", Label.class).setText(message);
+			stage.show();
 
-		ImageView ivIcon = loader.lookup("#ivIcon", ImageView.class);
-		InputStream is;
+			loader.lookup("#lblTitle", Label.class).setText(title);
+			loader.lookup("#lblMessage", Label.class).setText(message);
 
-		switch (type)
-		{
-		default:
-		case INFO:
-			is = R.getAsStream("/gfx/icons/info.png");
-			break;
+			ImageView ivIcon = loader.lookup("#ivIcon", ImageView.class);
+			InputStream is;
 
-		case ERROR:
-			is = R.getAsStream("/gfx/icons/error.png");
-			break;
+			switch (type)
+			{
+			default:
+			case INFO:
+				is = R.getAsStream("/gfx/icons/info.png");
+				break;
 
-		case WARNING:
-			is = R.getAsStream("/gfx/icons/warning.png");
-			break;
-		}
+			case ERROR:
+				is = R.getAsStream("/gfx/icons/error.png");
+				break;
 
-		ivIcon.setImage(new Image(is));
+			case WARNING:
+				is = R.getAsStream("/gfx/icons/warning.png");
+				break;
+			}
 
-		stage.show();
+			ivIcon.setImage(new Image(is));
+
+			// stage.show();
+		});
 	}
-
 }

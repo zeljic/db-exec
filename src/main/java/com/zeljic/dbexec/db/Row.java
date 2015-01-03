@@ -9,10 +9,6 @@ public class Row
 {
 	private HashMap<Integer, String> store = new HashMap<>();
 
-	public Row()
-	{
-	}
-
 	public void setData(int columnIdx, String value)
 	{
 		store.put(columnIdx, value);

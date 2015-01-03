@@ -13,7 +13,6 @@ import com.zeljic.dbexec.utils.Holder;
 
 public class MessageBoxController implements Initializable
 {
-
 	@FXML
 	Label lblTitle, lblMessage;
 
