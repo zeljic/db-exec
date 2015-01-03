@@ -11,17 +11,17 @@ public class R
 	{
 		InputStream tmp = R.class.getResourceAsStream(path);
 
-		if(tmp == null)
+		if (tmp == null)
 			Logger.getLogger(R.class).warn("Resource doesn't exist: " + path);
 
 		return tmp;
 	}
 
-	public static URL get( String path )
+	public static URL get(String path)
 	{
 		URL tmp = R.class.getResource(path);
 
-		if(tmp == null)
+		if (tmp == null)
 			Logger.getLogger(R.class).warn("Resource doesn't exist: " + path);
 
 		return tmp;
