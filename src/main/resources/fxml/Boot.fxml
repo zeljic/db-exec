@@ -12,18 +12,12 @@
          <children>
             <TitledPane text="Connection Settings" VBox.vgrow="NEVER">
                <content>
-                  <VBox spacing="5.0">
+                  <VBox fx:id="vbHolder" spacing="5.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
                            <children>
                               <Label text="Select Connector:" />
                               <ComboBox fx:id="cmbConnector" onAction="#onActionCmbConnector" HBox.hgrow="NEVER" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" spacing="5.0">
-                           <children>
-                              <TextField fx:id="txtDBPath" HBox.hgrow="ALWAYS" />
-                              <Button fx:id="btnBrowse" mnemonicParsing="false" onAction="#onActionBtnBrowse" text="Browse" />
                            </children>
                         </HBox>
                      </children>

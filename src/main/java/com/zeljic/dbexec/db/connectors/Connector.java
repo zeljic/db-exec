@@ -7,6 +7,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,14 +20,16 @@ public abstract class Connector implements IConnector
 	private String connString = "";
 	private String errorMessage = "";
 	private int errorCode = 0;
-	private ArrayList<String> columns = new ArrayList<String>();
+	private List<String> columns = new ArrayList<String>();
 	private ObservableList<Row> rows = FXCollections.observableArrayList();
 
+	@Override
 	public String getClassName()
 	{
 		return className;
 	}
 
+	@Override
 	public void setClassName(String className)
 	{
 		this.className = className;
@@ -40,31 +43,37 @@ public abstract class Connector implements IConnector
 		}
 	}
 
+	@Override
 	public String getConnString()
 	{
 		return connString;
 	}
 
+	@Override
 	public void setConnString(String connString)
 	{
 		this.connString = connString;
 	}
 
-	public ArrayList<String> getColumns()
+	@Override
+	public List<String> getColumns()
 	{
 		return columns;
 	}
 
-	public void setColumns(ArrayList<String> columns)
+	@Override
+	public void setColumns(List<String> columns)
 	{
 		this.columns = columns;
 	}
 
+	@Override
 	public ObservableList<Row> getRows()
 	{
 		return rows;
 	}
 
+	@Override
 	public void setRows(ObservableList<Row> rows)
 	{
 		this.rows = rows;

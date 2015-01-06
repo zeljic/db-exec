@@ -1,13 +1,14 @@
 package com.zeljic.dbexec.db;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Row
 {
-	private HashMap<Integer, String> store = new HashMap<>();
+	private Map<Integer, String> store = new HashMap<>();
 
 	public void setData(int columnIdx, String value)
 	{

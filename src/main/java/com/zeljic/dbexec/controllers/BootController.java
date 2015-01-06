@@ -1,6 +1,5 @@
 package com.zeljic.dbexec.controllers;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,22 +8,19 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
-import javafx.stage.FileChooser;
 
 import com.zeljic.dbexec.cmps.MessageBox;
 import com.zeljic.dbexec.cmps.MessageBox.Type;
 import com.zeljic.dbexec.db.Row;
-import com.zeljic.dbexec.db.connectors.ConnectorFactory;
-import com.zeljic.dbexec.db.connectors.ConnectorFactory.ConnectionType;
 import com.zeljic.dbexec.db.connectors.IConnector;
 import com.zeljic.dbexec.uil.Loader;
+import com.zeljic.dbexec.utils.ConnectorType;
 import com.zeljic.dbexec.utils.Holder;
 import com.zeljic.dbexec.utils.R;
 
@@ -40,31 +36,21 @@ public class BootController implements Initializable
 	private TableView<Row> tvMain;
 
 	@FXML
-	private TextField txtDBPath;
+	private ComboBox<com.zeljic.dbexec.utils.ConnectorType> cmbConnector;
 
 	@FXML
-	private Button btnBrowse;
-
-	@FXML
-	private ComboBox<String> cmbConnector;
+	private VBox vbHolder;
 
 	@Override
 	public void initialize(URL url, ResourceBundle bundle)
 	{
 		wvMain.getEngine().load(R.get("/editor/index.html").toExternalForm());
-		cmbConnector.getItems().addAll("SQLite 3");
-		cmbConnector.getItems().addAll("MySQL");
-		cmbConnector.valueProperty().set("SQLite 3");
-	}
 
-	@FXML
-	public void onActionBtnBrowse()
-	{
-		FileChooser fc = new FileChooser();
-		File f = fc.showOpenDialog(Loader.getInstance(Holder.BOOT).getStage());
+		cmbConnector.getItems().addAll(new ConnectorType(ConnectorType.Type.SQLite3, "SQLite 3", "/fxml/ConnectorSQLite3.fxml"));
+		// cmbConnector.getItems().addAll(new
+		// ConnectorType(ConnectorType.Type.MySQL, "MySQL"));
 
-		if (f != null)
-			txtDBPath.setText(f.getPath());
+		cmbConnector.setValue(cmbConnector.getItems().get(0));
 	}
 
 	@FXML
@@ -79,7 +65,9 @@ public class BootController implements Initializable
 		tvMain.getColumns().clear();
 
 		String query = (String) wvMain.getEngine().executeScript("editor.getValue();");
-		IConnector connector = new ConnectorFactory().getConnector(ConnectionType.SQLite3);
+
+		ConnectorType connectorType = cmbConnector.getValue();
+		IConnector connector = connectorType.getControllerClass().getConnector();
 
 		new Thread(() -> {
 
@@ -112,6 +100,6 @@ public class BootController implements Initializable
 	@FXML
 	public void onActionCmbConnector()
 	{
-
+		vbHolder.getChildren().add(1, cmbConnector.getValue().getLoader().getNode());
 	}
 }

@@ -3,6 +3,7 @@ package com.zeljic.dbexec.uil;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -19,8 +20,9 @@ public class Loader
 	private Stage _stage;
 	private Scene _scene;
 	private FXMLLoader _loader;
+	private Node _mainNode;
 
-	private static HashMap<String, Loader> _loaders = new HashMap<String, Loader>();
+	private static Map<String, Loader> _loaders = new HashMap<String, Loader>();
 
 	protected Loader(String name, Stage stage, URL path)
 	{
@@ -31,7 +33,8 @@ public class Loader
 
 		try
 		{
-			_scene = new Scene((Parent) _loader.load());
+			_mainNode = _loader.load();
+			_scene = new Scene((Parent) _mainNode);
 		} catch (IOException e)
 		{
 			Logger.getLogger(getClass()).warn(e);
@@ -74,6 +77,16 @@ public class Loader
 	public Scene getScene()
 	{
 		return _scene;
+	}
+
+	public Node getNode()
+	{
+		return _mainNode;
+	}
+
+	public Object getRawController()
+	{
+		return _loader.getController();
 	}
 
 	public <T> T lookup(String selector, Class<T> clazz)

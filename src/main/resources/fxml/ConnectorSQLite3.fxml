@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<HBox alignment="CENTER_LEFT" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeljic.dbexec.controllers.SQLite3Controller">
+   <children>
+      <TextField fx:id="txtDBPath" HBox.hgrow="ALWAYS" />
+      <Button fx:id="btnBrowse" mnemonicParsing="false" onAction="#onActionBtnBrowse" text="Browse" />
+   </children>
+	<padding>
+		<Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
+	</padding>
+</HBox>
