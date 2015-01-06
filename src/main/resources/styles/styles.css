@@ -1,0 +1,21 @@
+#spMain{
+	-fx-background-color: #ffffff11, #ffffff11;
+    -fx-background-insets: 0;
+	-fx-padding: 0;
+}
+
+#spMain > .split-pane-divider {
+    -fx-padding: 0 0.25em 0 0.25em;
+}
+
+#spMain:horizontal > .split-pane-divider {
+   -fx-background-insets: 0, 1 0 1 0;
+}
+
+#spMain:vertical > .split-pane-divider {
+   -fx-background-insets: 0, 0 1 0 1;
+}
+
+.titled-pane > .title {
+    -fx-background-radius: 0;
+}

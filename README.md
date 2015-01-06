@@ -11,7 +11,7 @@ Clone source and build .jar file
 ```bash
 git clone https://github.com/zeljic/db-exec.git
 cd db-exec
-mvn clean package assembly:single
+mvn clean package
 ```
 
 Run .jar executable

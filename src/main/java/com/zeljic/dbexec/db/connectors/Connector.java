@@ -13,7 +13,7 @@ import javafx.collections.ObservableList;
 
 import com.zeljic.dbexec.db.Row;
 
-public abstract class Connector
+public abstract class Connector implements IConnector
 {
 	private String className = "";
 	private String connString = "";
@@ -70,16 +70,19 @@ public abstract class Connector
 		this.rows = rows;
 	}
 
+	@Override
 	public String getErrorMessage()
 	{
 		return errorMessage;
 	}
 
+	@Override
 	public int getErrorCode()
 	{
 		return errorCode;
 	}
 
+	@Override
 	public boolean executeQuery(String query)
 	{
 		setColumns(new ArrayList<String>());
@@ -103,7 +106,7 @@ public abstract class Connector
 			}
 		} catch (SQLException e)
 		{
-			errorMessage = e.getMessage() + System.lineSeparator() + e.getStackTrace();
+			errorMessage = e.getMessage();
 			errorCode = e.getErrorCode();
 
 			return false;

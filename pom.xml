@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.zeljic.dbexec</groupId>
-	<artifactId>db-exex</artifactId>
+	<artifactId>db-exec</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.0</version>
 	<name>db-exec</name>
@@ -78,6 +78,15 @@
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
 				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			
 		</plugins>
@@ -96,7 +105,7 @@
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>3.8.7</version>
-		</dependency>
+		</dependency>				
 			
 	</dependencies>
 </project>
