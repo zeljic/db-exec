@@ -32,7 +32,7 @@
             </TitledPane>
             <SplitPane fx:id="spMain" dividerPositions="0.4" orientation="VERTICAL" prefWidth="160.0" VBox.vgrow="ALWAYS">
               <items>
-                <AnchorPane minHeight="150.0">
+                <AnchorPane minHeight="110.0">
                      <children>
                         <TitledPane animated="false" collapsible="false" text="SQL Query" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
@@ -60,7 +60,7 @@
                         <Insets />
                      </opaqueInsets>
                   </AnchorPane>
-                <AnchorPane minHeight="150.0">
+                <AnchorPane minHeight="110.0">
                      <children>
                         <TitledPane animated="false" collapsible="false" prefHeight="200.0" prefWidth="200.0" text="Result" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>

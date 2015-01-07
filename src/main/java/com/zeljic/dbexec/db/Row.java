@@ -1,6 +1,6 @@
 package com.zeljic.dbexec.db;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -8,7 +8,7 @@ import javafx.beans.property.StringProperty;
 
 public class Row
 {
-	private Map<Integer, String> store = new HashMap<>();
+	private Map<Integer, String> store = new LinkedHashMap<Integer, String>();
 
 	public void setData(int columnIdx, String value)
 	{

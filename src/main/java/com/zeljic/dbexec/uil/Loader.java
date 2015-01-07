@@ -2,7 +2,7 @@ package com.zeljic.dbexec.uil;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javafx.fxml.FXMLLoader;
@@ -22,7 +22,7 @@ public class Loader
 	private FXMLLoader _loader;
 	private Node _mainNode;
 
-	private static Map<String, Loader> _loaders = new HashMap<String, Loader>();
+	private static Map<String, Loader> _loaders = new LinkedHashMap<String, Loader>();
 
 	protected Loader(String name, Stage stage, URL path)
 	{

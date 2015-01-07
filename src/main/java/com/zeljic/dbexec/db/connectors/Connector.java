@@ -99,7 +99,7 @@ public abstract class Connector implements IConnector
 			int size = rmd.getColumnCount();
 
 			for (int i = 0; i < size; i++)
-				getColumns().add(rmd.getColumnLabel(i + 1));
+				columns.add(rmd.getColumnLabel(i + 1));
 
 			while (rs.next())
 			{

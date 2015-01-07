@@ -1,9 +1,10 @@
-package com.zeljic.dbexec.utils;
+package com.zeljic.dbexec.db.connectors;
 
 import com.zeljic.dbexec.controllers.IConnectorController;
 import com.zeljic.dbexec.uil.Loader;
+import com.zeljic.dbexec.utils.R;
 
-public class ConnectorType
+public class ConnectorItem
 {
 	public enum Type
 	{
@@ -16,7 +17,7 @@ public class ConnectorType
 	private Loader loader;
 	private IConnectorController controller;
 
-	public ConnectorType(Type type, String display, String fxmlPath)
+	public ConnectorItem(Type type, String display, String fxmlPath)
 	{
 		this.type = type;
 		this.display = display;

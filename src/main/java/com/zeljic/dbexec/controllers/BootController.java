@@ -21,9 +21,9 @@ import javafx.scene.web.WebView;
 import com.zeljic.dbexec.cmps.MessageBox;
 import com.zeljic.dbexec.cmps.MessageBox.Type;
 import com.zeljic.dbexec.db.Row;
+import com.zeljic.dbexec.db.connectors.ConnectorItem;
 import com.zeljic.dbexec.db.connectors.IConnector;
 import com.zeljic.dbexec.uil.Loader;
-import com.zeljic.dbexec.utils.ConnectorType;
 import com.zeljic.dbexec.utils.Holder;
 import com.zeljic.dbexec.utils.R;
 
@@ -39,7 +39,7 @@ public class BootController implements Initializable
 	private TableView<Row> tvMain;
 
 	@FXML
-	private ComboBox<ConnectorType> cmbConnector;
+	private ComboBox<ConnectorItem> cmbConnector;
 
 	@FXML
 	private VBox vbHolder;
@@ -49,8 +49,8 @@ public class BootController implements Initializable
 	{
 		wvMain.getEngine().load(R.get("/editor/index.html").toExternalForm());
 
-		cmbConnector.getItems().addAll(new ConnectorType(ConnectorType.Type.SQLite3, "SQLite 3", "/fxml/ConnectorSQLite3.fxml"));
-		cmbConnector.getItems().addAll(new ConnectorType(ConnectorType.Type.MySQL, "MySQL", "/fxml/ConnectorMySQL.fxml"));
+		cmbConnector.getItems().addAll(new ConnectorItem(ConnectorItem.Type.SQLite3, "SQLite 3", "/fxml/ConnectorSQLite3.fxml"));
+		cmbConnector.getItems().addAll(new ConnectorItem(ConnectorItem.Type.MySQL, "MySQL", "/fxml/ConnectorMySQL.fxml"));
 
 		cmbConnector.setValue(cmbConnector.getItems().get(0));
 	}
@@ -68,7 +68,7 @@ public class BootController implements Initializable
 
 		String query = (String) wvMain.getEngine().executeScript("editor.getValue();");
 
-		ConnectorType connectorType = cmbConnector.getValue();
+		ConnectorItem connectorType = cmbConnector.getValue();
 		IConnector connector = connectorType.getControllerClass().getConnector();
 
 		new Thread(() -> {
@@ -92,7 +92,6 @@ public class BootController implements Initializable
 			}
 
 			Platform.runLater(() -> {
-				tvMain.getItems().clear();
 				tvMain.getColumns().addAll(storage);
 				tvMain.setItems(connector.getRows());
 			});
