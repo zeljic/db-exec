@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +23,7 @@ public abstract class Connector implements IConnector
 	private int errorCode = 0;
 	private List<String> columns = new ArrayList<String>();
 	private ObservableList<Row> rows = FXCollections.observableArrayList();
+	private Properties properties = new Properties();
 
 	@Override
 	public String getClassName()
@@ -36,8 +38,8 @@ public abstract class Connector implements IConnector
 
 		try
 		{
-			Class.forName(className).newInstance();
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e)
+			Class.forName(className);
+		} catch (ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		}
@@ -62,21 +64,9 @@ public abstract class Connector implements IConnector
 	}
 
 	@Override
-	public void setColumns(List<String> columns)
-	{
-		this.columns = columns;
-	}
-
-	@Override
 	public ObservableList<Row> getRows()
 	{
 		return rows;
-	}
-
-	@Override
-	public void setRows(ObservableList<Row> rows)
-	{
-		this.rows = rows;
 	}
 
 	@Override
@@ -92,11 +82,18 @@ public abstract class Connector implements IConnector
 	}
 
 	@Override
+	public void setProperties(Properties properties)
+	{
+		this.properties = properties;
+	};
+
+	@Override
 	public boolean executeQuery(String query)
 	{
-		setColumns(new ArrayList<String>());
+		columns.clear();
+		rows.clear();
 
-		try (Connection conn = DriverManager.getConnection(getConnString()); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query);)
+		try (Connection conn = DriverManager.getConnection(getConnString(), properties); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query);)
 		{
 			ResultSetMetaData rmd = rs.getMetaData();
 			int size = rmd.getColumnCount();
@@ -111,7 +108,7 @@ public abstract class Connector implements IConnector
 				for (int i = 0; i < size; i++)
 					row.setData(i, rs.getString(i + 1));
 
-				getRows().add(row);
+				rows.add(row);
 			}
 		} catch (SQLException e)
 		{

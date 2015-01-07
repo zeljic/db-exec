@@ -17,6 +17,8 @@ import com.zeljic.dbexec.utils.Holder;
 
 public class SQLite3Controller implements Initializable, IConnectorController
 {
+	IConnector connector = new SQLite3Connector();
+
 	@FXML
 	public TextField txtDBPath;
 
@@ -42,9 +44,7 @@ public class SQLite3Controller implements Initializable, IConnectorController
 	@Override
 	public IConnector getConnector()
 	{
-		IConnector connector = new SQLite3Connector();
 		connector.setConnString("jdbc:sqlite:" + txtDBPath.getText());
-
 		return connector;
 	}
 }

@@ -6,12 +6,15 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
@@ -36,7 +39,7 @@ public class BootController implements Initializable
 	private TableView<Row> tvMain;
 
 	@FXML
-	private ComboBox<com.zeljic.dbexec.utils.ConnectorType> cmbConnector;
+	private ComboBox<ConnectorType> cmbConnector;
 
 	@FXML
 	private VBox vbHolder;
@@ -47,8 +50,7 @@ public class BootController implements Initializable
 		wvMain.getEngine().load(R.get("/editor/index.html").toExternalForm());
 
 		cmbConnector.getItems().addAll(new ConnectorType(ConnectorType.Type.SQLite3, "SQLite 3", "/fxml/ConnectorSQLite3.fxml"));
-		// cmbConnector.getItems().addAll(new
-		// ConnectorType(ConnectorType.Type.MySQL, "MySQL"));
+		cmbConnector.getItems().addAll(new ConnectorType(ConnectorType.Type.MySQL, "MySQL", "/fxml/ConnectorMySQL.fxml"));
 
 		cmbConnector.setValue(cmbConnector.getItems().get(0));
 	}
@@ -100,6 +102,14 @@ public class BootController implements Initializable
 	@FXML
 	public void onActionCmbConnector()
 	{
-		vbHolder.getChildren().add(1, cmbConnector.getValue().getLoader().getNode());
+		ObservableList<Node> children = vbHolder.getChildren();
+
+		if (children.size() > 1)
+			children.remove(1);
+
+		Node node = cmbConnector.getValue().getLoader().getNode();
+		VBox.setVgrow(node, Priority.ALWAYS);
+
+		children.add(1, node);
 	}
 }

@@ -1,6 +1,7 @@
 package com.zeljic.dbexec.db.connectors;
 
 import java.util.List;
+import java.util.Properties;
 
 import javafx.collections.ObservableList;
 
@@ -26,7 +27,5 @@ public interface IConnector
 
 	public void setConnString(String connString);
 
-	public void setColumns(List<String> columns);
-
-	public void setRows(ObservableList<Row> rows);
+	public void setProperties(Properties properties);
 }
