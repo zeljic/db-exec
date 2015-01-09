@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
@@ -44,15 +46,38 @@ public class BootController implements Initializable
 	@FXML
 	private VBox vbHolder;
 
+	@FXML
+	private Button btnExecute, btnCancel;
+
+	private SimpleBooleanProperty isRunning = new SimpleBooleanProperty(false);
+
 	@Override
 	public void initialize(URL url, ResourceBundle bundle)
 	{
 		wvMain.getEngine().load(R.get("/editor/index.html").toExternalForm());
 
-		cmbConnector.getItems().addAll(new ConnectorItem(ConnectorItem.Type.SQLite3, "SQLite 3", "/fxml/ConnectorSQLite3.fxml"));
-		cmbConnector.getItems().addAll(new ConnectorItem(ConnectorItem.Type.MySQL, "MySQL", "/fxml/ConnectorMySQL.fxml"));
+		cmbConnector.itemsProperty().set(ConnectorItem.getConnectorList());
+
+		cmbConnector.valueProperty().addListener((value, oldv, newv) -> {
+			ObservableList<Node> children = vbHolder.getChildren();
+
+			if (children.size() > 1)
+				children.remove(1);
+
+			Node node = cmbConnector.getValue().getLoader().getNode();
+			VBox.setVgrow(node, Priority.ALWAYS);
+
+			children.add(1, node);
+		});
 
 		cmbConnector.setValue(cmbConnector.getItems().get(0));
+
+		isRunning.addListener((value, oldv, newv) -> {
+			Platform.runLater(() -> {
+				btnCancel.disableProperty().set(!newv);
+				btnExecute.disableProperty().set(newv);
+			});
+		});
 	}
 
 	@FXML
@@ -71,11 +96,14 @@ public class BootController implements Initializable
 		ConnectorItem connectorType = cmbConnector.getValue();
 		IConnector connector = connectorType.getControllerClass().getConnector();
 
+		isRunning.set(true);
+
 		new Thread(() -> {
 
 			if (!connector.executeQuery(query))
 			{
 				MessageBox.getInstance().show("SQL ERROR: Code " + connector.getErrorCode(), connector.getErrorMessage(), Type.ERROR, Loader.getInstance(Holder.BOOT).getStage());
+				isRunning.set(false);
 				return;
 			}
 
@@ -91,24 +119,19 @@ public class BootController implements Initializable
 				storage.add(column);
 			}
 
-			Platform.runLater(() -> {
-				tvMain.getColumns().addAll(storage);
-				tvMain.setItems(connector.getRows());
-			});
+			if (isRunning.get())
+				Platform.runLater(() -> {
+					tvMain.getColumns().addAll(storage);
+					tvMain.setItems(connector.getRows());
+					isRunning.set(false);
+				});
 		}).start();
 	}
 
 	@FXML
-	public void onActionCmbConnector()
+	public void onActionBtnCancel()
 	{
-		ObservableList<Node> children = vbHolder.getChildren();
-
-		if (children.size() > 1)
-			children.remove(1);
-
-		Node node = cmbConnector.getValue().getLoader().getNode();
-		VBox.setVgrow(node, Priority.ALWAYS);
-
-		children.add(1, node);
+		isRunning.set(false);
 	}
+
 }
