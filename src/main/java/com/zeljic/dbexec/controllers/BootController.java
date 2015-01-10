@@ -1,5 +1,8 @@
 package com.zeljic.dbexec.controllers;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +22,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 import com.zeljic.dbexec.cmps.MessageBox;
 import com.zeljic.dbexec.cmps.MessageBox.Type;
 import com.zeljic.dbexec.db.Row;
 import com.zeljic.dbexec.db.connectors.ConnectorItem;
 import com.zeljic.dbexec.db.connectors.IConnector;
+import com.zeljic.dbexec.export.ExportItem;
 import com.zeljic.dbexec.uil.Loader;
 import com.zeljic.dbexec.utils.Holder;
 import com.zeljic.dbexec.utils.R;
@@ -44,6 +50,9 @@ public class BootController implements Initializable
 	private ComboBox<ConnectorItem> cmbConnector;
 
 	@FXML
+	private ComboBox<ExportItem> cmbExport;
+
+	@FXML
 	private VBox vbHolder;
 
 	@FXML
@@ -55,6 +64,8 @@ public class BootController implements Initializable
 	public void initialize(URL url, ResourceBundle bundle)
 	{
 		wvMain.getEngine().load(R.get("/editor/index.html").toExternalForm());
+
+		// initialize cmbConnector
 
 		cmbConnector.itemsProperty().set(ConnectorItem.getConnectorList());
 
@@ -71,6 +82,10 @@ public class BootController implements Initializable
 		});
 
 		cmbConnector.setValue(cmbConnector.getItems().get(0));
+
+		// initialize cmbExport
+		cmbExport.itemsProperty().set(ExportItem.getExporterList());
+		cmbExport.setValue(cmbExport.getItems().get(0));
 
 		isRunning.addListener((value, oldv, newv) -> {
 			Platform.runLater(() -> {
@@ -134,4 +149,27 @@ public class BootController implements Initializable
 		isRunning.set(false);
 	}
 
+	@FXML
+	public void onActionBtnExport()
+	{
+		FileChooser fc = new FileChooser();
+		fc.getExtensionFilters().add(new ExtensionFilter("CSV Fiel", "*.csv"));
+		File f = fc.showSaveDialog(Loader.getInstance(Holder.BOOT).getStage());
+
+		if (f != null)
+		{
+			new Thread(() -> {
+				ByteArrayOutputStream baos = cmbExport.getValue().getExporter().export(tvMain.getColumns(), tvMain.getItems());
+
+				try(FileOutputStream fos = new FileOutputStream(f))
+				{
+					baos.writeTo(fos);
+				} catch (Exception e)
+				{
+
+				}
+
+			}).start();
+		}
+	}
 }

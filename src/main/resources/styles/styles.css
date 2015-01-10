@@ -19,3 +19,7 @@
 .titled-pane > .title {
     -fx-background-radius: 0;
 }
+
+#tvMain{
+    -fx-background-insets: 0, 1 0 0 0;
+}

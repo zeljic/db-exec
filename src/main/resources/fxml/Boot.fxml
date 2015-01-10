@@ -6,30 +6,34 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="200.0" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeljic.dbexec.controllers.BootController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="200.0" minWidth="-Infinity" prefHeight="603.0" prefWidth="800.0" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeljic.dbexec.controllers.BootController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TitledPane text="Connection Settings" VBox.vgrow="NEVER">
-               <content>
-                  <VBox fx:id="vbHolder" spacing="5.0">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+            <AnchorPane VBox.vgrow="NEVER">
+               <children>
+                  <TitledPane text="Connection Settings" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" VBox.vgrow="NEVER">
+                     <content>
+                        <VBox fx:id="vbHolder" spacing="5.0">
                            <children>
-                              <Label text="Select Connector:" />
-                              <ComboBox fx:id="cmbConnector" minWidth="100.0" HBox.hgrow="NEVER" />
+                              <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+                                 <children>
+                                    <Label text="Select Connector:" />
+                                    <ComboBox fx:id="cmbConnector" minWidth="100.0" HBox.hgrow="NEVER" />
+                                 </children>
+                              </HBox>
                            </children>
-                        </HBox>
-                     </children>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </VBox>
-               </content>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </TitledPane>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TitledPane>
+               </children>
+            </AnchorPane>
             <SplitPane fx:id="spMain" dividerPositions="0.4" orientation="VERTICAL" prefWidth="160.0" VBox.vgrow="ALWAYS">
               <items>
                 <AnchorPane minHeight="110.0">
@@ -63,9 +67,29 @@
                   </AnchorPane>
                 <AnchorPane minHeight="110.0">
                      <children>
-                        <TitledPane animated="false" collapsible="false" prefHeight="200.0" prefWidth="200.0" text="Result" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TitledPane animated="false" collapsible="false" text="Result" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <TableView fx:id="tvMain" />
+                              <VBox>
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="NEVER">
+                                       <children>
+                                          <Label text="Export As:" />
+                                          <ComboBox fx:id="cmbExport" minWidth="100.0" prefWidth="100.0" />
+                                          <Button fx:id="btnExport" mnemonicParsing="false" onAction="#onActionBtnExport" text="Export" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <TableView fx:id="tvMain" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin></TableView>
+                                 </children>
+								 <padding>
+									<Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
+								 </padding>
+                              </VBox>
                            </content>
                         </TitledPane>
                      </children>

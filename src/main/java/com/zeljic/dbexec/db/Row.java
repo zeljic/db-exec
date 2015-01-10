@@ -22,4 +22,9 @@ public class Row
 
 		return s;
 	}
+
+	public int getSize()
+	{
+		return store.size();
+	}
 }
