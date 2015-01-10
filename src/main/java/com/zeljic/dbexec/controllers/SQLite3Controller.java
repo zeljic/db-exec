@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 import com.zeljic.dbexec.db.connectors.IConnector;
 import com.zeljic.dbexec.db.connectors.SQLite3Connector;
@@ -35,6 +36,7 @@ public class SQLite3Controller implements Initializable, IConnectorController
 	public void onActionBtnBrowse()
 	{
 		FileChooser fc = new FileChooser();
+		fc.getExtensionFilters().addAll(new ExtensionFilter("SQLite Database File", "*.db"), new ExtensionFilter("All Files", "*.*"));
 		File f = fc.showOpenDialog(Loader.getInstance(Holder.BOOT).getStage());
 
 		if (f != null)

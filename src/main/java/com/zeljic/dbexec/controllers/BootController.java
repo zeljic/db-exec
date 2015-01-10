@@ -3,7 +3,9 @@ package com.zeljic.dbexec.controllers;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,6 +26,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.zeljic.dbexec.cmps.MessageBox;
 import com.zeljic.dbexec.cmps.MessageBox.Type;
@@ -106,10 +111,9 @@ public class BootController implements Initializable
 	{
 		tvMain.getColumns().clear();
 
-		String query = (String) wvMain.getEngine().executeScript("editor.getValue();");
-
 		ConnectorItem connectorType = cmbConnector.getValue();
 		IConnector connector = connectorType.getControllerClass().getConnector();
+		String query = getQuery();
 
 		isRunning.set(true);
 
@@ -153,15 +157,14 @@ public class BootController implements Initializable
 	public void onActionBtnExport()
 	{
 		FileChooser fc = new FileChooser();
-		fc.getExtensionFilters().add(new ExtensionFilter("CSV Fiel", "*.csv"));
+		fc.getExtensionFilters().add(new ExtensionFilter("CSV File", "*.csv"));
 		File f = fc.showSaveDialog(Loader.getInstance(Holder.BOOT).getStage());
 
 		if (f != null)
-		{
 			new Thread(() -> {
 				ByteArrayOutputStream baos = cmbExport.getValue().getExporter().export(tvMain.getColumns(), tvMain.getItems());
 
-				try(FileOutputStream fos = new FileOutputStream(f))
+				try (FileOutputStream fos = new FileOutputStream(f))
 				{
 					baos.writeTo(fos);
 				} catch (Exception e)
@@ -170,6 +173,65 @@ public class BootController implements Initializable
 				}
 
 			}).start();
+	}
+
+	@FXML
+	public void onActionBtnScriptOpen()
+	{
+		FileChooser fc = new FileChooser();
+		fc.getExtensionFilters().addAll(new ExtensionFilter("SQL", "*.sql"), new ExtensionFilter("All Files", "*.*"));
+
+		File f = fc.showOpenDialog(Loader.getInstance(Holder.BOOT).getStage());
+
+		if (f != null)
+			new Thread(() -> {
+				String fileContent = "";
+
+				try
+				{
+					fileContent = FileUtils.readFileToString(f, Charset.forName("UTF-8"));
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+
+				setQuery(fileContent);
+			}).start();
+	}
+
+	@FXML
+	public void onActionBtnScriptSave()
+	{
+		FileChooser fc = new FileChooser();
+		fc.getExtensionFilters().addAll(new ExtensionFilter("SQL", "*.sql"), new ExtensionFilter("All Files", "*.*"));
+
+		File f = fc.showSaveDialog(Loader.getInstance(Holder.BOOT).getStage());
+
+		if (f != null)
+		{
+			final String query = getQuery().trim();
+
+			new Thread(() -> {
+				try
+				{
+					FileUtils.writeStringToFile(f, query, Charset.forName("UTF-8"));
+				} catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+			}).start();
 		}
+	}
+
+	private String getQuery()
+	{
+		return (String) wvMain.getEngine().executeScript("editor.getValue();");
+	}
+
+	private void setQuery(String query)
+	{
+		Platform.runLater(() -> {
+			wvMain.getEngine().executeScript("editor.setValue('" + StringEscapeUtils.escapeEcmaScript(query) + "');");
+		});
 	}
 }

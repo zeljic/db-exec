@@ -42,9 +42,12 @@
                            <content>
                               <VBox>
                                  <children>
-                                    <HBox alignment="CENTER_RIGHT" spacing="5.0" VBox.vgrow="NEVER">
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
                                        <children>
+                                          <Button fx:id="btnScriptOpen" mnemonicParsing="false" onAction="#onActionBtnScriptOpen" text="Open" />
+                                          <Button fx:id="btnScriptSave" mnemonicParsing="false" onAction="#onActionBtnScriptSave" text="Save" />
                                           <Button fx:id="btnClear" mnemonicParsing="false" onAction="#onActionBtnClear" text="Clear" />
+                                          <Pane HBox.hgrow="ALWAYS" />
                                           <Button fx:id="btnExecute" mnemonicParsing="false" onAction="#onActionBtnExecute" text="Execute Query" />
                                           <Button fx:id="btnCancel" disable="true" mnemonicParsing="false" onAction="#onActionBtnCancel" text="Cancel" />
                                        </children>
@@ -71,7 +74,7 @@
                            <content>
                               <VBox>
                                  <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="NEVER">
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
                                        <children>
                                           <Label text="Export As:" />
                                           <ComboBox fx:id="cmbExport" minWidth="100.0" prefWidth="100.0" />
@@ -81,10 +84,11 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </VBox.margin>
                                     </HBox>
-                                    <TableView fx:id="tvMain" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+                                    <TableView fx:id="tvMain" VBox.vgrow="ALWAYS">
                                        <VBox.margin>
                                           <Insets />
-                                       </VBox.margin></TableView>
+                                       </VBox.margin>
+                                    </TableView>
                                  </children>
 								 <padding>
 									<Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
