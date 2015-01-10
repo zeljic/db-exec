@@ -93,8 +93,17 @@ public abstract class Connector implements IConnector
 		columns.clear();
 		rows.clear();
 
-		try (Connection conn = DriverManager.getConnection(getConnString(), properties); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query);)
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		try (Connection conn = DriverManager.getConnection(getConnString(), properties))
 		{
+			// hack for read-only query
+			conn.setAutoCommit(false);
+
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+
 			ResultSetMetaData rmd = rs.getMetaData();
 			int size = rmd.getColumnCount();
 
@@ -116,6 +125,16 @@ public abstract class Connector implements IConnector
 			errorCode = e.getErrorCode();
 
 			return false;
+		} finally
+		{
+			if (stmt != null)
+				try
+				{
+					stmt.close();
+				} catch (SQLException e)
+				{
+
+				}
 		}
 
 		return true;
