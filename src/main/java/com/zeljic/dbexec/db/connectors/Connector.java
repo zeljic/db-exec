@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import com.zeljic.dbexec.db.Row;
 
 public abstract class Connector implements IConnector
@@ -22,7 +19,7 @@ public abstract class Connector implements IConnector
 	private String errorMessage = "";
 	private int errorCode = 0;
 	private List<String> columns = new ArrayList<String>();
-	private ObservableList<Row> rows = FXCollections.observableArrayList();
+	private List<Row> rows = new ArrayList<Row>();
 	private Properties properties = new Properties();
 
 	@Override
@@ -58,15 +55,15 @@ public abstract class Connector implements IConnector
 	}
 
 	@Override
-	public List<String> getColumns()
+	public List<Row> getRows()
 	{
-		return columns;
+		return rows;
 	}
 
 	@Override
-	public ObservableList<Row> getRows()
+	public List<String> getColumns()
 	{
-		return rows;
+		return columns;
 	}
 
 	@Override

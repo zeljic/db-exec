@@ -3,8 +3,6 @@ package com.zeljic.dbexec.db.connectors;
 import java.util.List;
 import java.util.Properties;
 
-import javafx.collections.ObservableList;
-
 import com.zeljic.dbexec.db.Row;
 
 public interface IConnector
@@ -17,7 +15,7 @@ public interface IConnector
 
 	public List<String> getColumns();
 
-	public ObservableList<Row> getRows();
+	public List<Row> getRows();
 
 	public String getClassName();
 

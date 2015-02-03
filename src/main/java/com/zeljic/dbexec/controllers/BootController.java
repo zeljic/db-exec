@@ -12,12 +12,15 @@ import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -63,7 +66,11 @@ public class BootController implements Initializable
 	@FXML
 	private Button btnExecute, btnCancel;
 
+	@FXML
+	private Label lblStatus, lblColumns, lblRows, lblExecutionTime;
+
 	private SimpleBooleanProperty isRunning = new SimpleBooleanProperty(false);
+	private SimpleLongProperty executionTime = new SimpleLongProperty(0);
 
 	@Override
 	public void initialize(URL url, ResourceBundle bundle)
@@ -71,7 +78,6 @@ public class BootController implements Initializable
 		wvMain.getEngine().load(R.get("/editor/index.html").toExternalForm());
 
 		// initialize cmbConnector
-
 		cmbConnector.itemsProperty().set(ConnectorItem.getConnectorList());
 
 		cmbConnector.valueProperty().addListener((value, oldv, newv) -> {
@@ -96,6 +102,32 @@ public class BootController implements Initializable
 			Platform.runLater(() -> {
 				btnCancel.disableProperty().set(!newv);
 				btnExecute.disableProperty().set(newv);
+
+				lblStatus.setText(newv ? "Working" : "Ready");
+			});
+		});
+
+		// add listeners for change columns and rows of table
+		tvMain.getColumns().addListener(new ListChangeListener<TableColumn<?, ?>>() {
+			@Override
+			public void onChanged(javafx.collections.ListChangeListener.Change<? extends TableColumn<?, ?>> c)
+			{
+				lblColumns.setText(String.valueOf(tvMain.getColumns().size()));
+			}
+		});
+
+		tvMain.getItems().addListener(new ListChangeListener<Row>() {
+			@Override
+			public void onChanged(javafx.collections.ListChangeListener.Change<? extends Row> c)
+			{
+				lblRows.setText(String.valueOf(tvMain.getItems().size()));
+			}
+		});
+
+		// add listener for execution time
+		executionTime.addListener((value, oldv, newv) -> {
+			Platform.runLater(() -> {
+				lblExecutionTime.setText(String.valueOf(newv));
 			});
 		});
 	}
@@ -109,7 +141,10 @@ public class BootController implements Initializable
 	@FXML
 	public void onActionBtnExecute()
 	{
+		final long time = System.currentTimeMillis();
+
 		tvMain.getColumns().clear();
+		tvMain.getItems().clear();
 
 		ConnectorItem connectorType = cmbConnector.getValue();
 		IConnector connector = connectorType.getControllerClass().getConnector();
@@ -127,7 +162,7 @@ public class BootController implements Initializable
 			}
 
 			List<String> columns = connector.getColumns();
-			List<TableColumn<Row, String>> storage = new ArrayList<TableColumn<Row, String>>();
+			List<TableColumn<Row, String>> tableColumns = new ArrayList<TableColumn<Row, String>>();
 
 			for (int i = 0, size = columns.size(); i < size; i++)
 			{
@@ -135,14 +170,15 @@ public class BootController implements Initializable
 				TableColumn<Row, String> column = new TableColumn<Row, String>(columns.get(i));
 
 				column.setCellValueFactory(data -> data.getValue().getData(fi));
-				storage.add(column);
+				tableColumns.add(column);
 			}
 
 			if (isRunning.get())
 				Platform.runLater(() -> {
-					tvMain.getColumns().addAll(storage);
-					tvMain.setItems(connector.getRows());
+					tvMain.getColumns().addAll(tableColumns);
+					tvMain.getItems().addAll(connector.getRows());
 					isRunning.set(false);
+					executionTime.set((System.currentTimeMillis() - time));
 				});
 		}).start();
 	}

@@ -100,6 +100,34 @@
                   </AnchorPane>
               </items>
             </SplitPane>
+            <HBox VBox.vgrow="NEVER">
+               <children>
+                  <Label text="Status: " />
+                  <Label fx:id="lblStatus" text="Ready" />
+                  <Separator orientation="VERTICAL" prefWidth="20.0" rotate="15.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Separator>
+                  <Label text="Columns: " />
+                  <Label fx:id="lblColumns" text="0" />
+                  <Separator orientation="VERTICAL" prefWidth="20.0" rotate="15.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Separator>
+                  <Label text="Rows: " />
+                  <Label fx:id="lblRows" text="0" />
+                  <Separator layoutX="92.0" layoutY="10.0" orientation="VERTICAL" prefWidth="20.0" rotate="15.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Separator>
+                  <Label text="Execution Time: " />
+                  <Label fx:id="lblExecutionTime" text="0" />
+                  <Label text="ms" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>
