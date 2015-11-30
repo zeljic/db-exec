@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.zeljic.dbexec.db.Row;
 
 public abstract class Connector implements IConnector
@@ -21,6 +24,8 @@ public abstract class Connector implements IConnector
 	private List<String> columns = new ArrayList<String>();
 	private List<Row> rows = new ArrayList<Row>();
 	private Properties properties = new Properties();
+	
+	private final Logger logger = LogManager.getLogger();
 
 	@Override
 	public String getClassName()
@@ -38,7 +43,7 @@ public abstract class Connector implements IConnector
 			Class.forName(className);
 		} catch (ClassNotFoundException e)
 		{
-			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 
@@ -90,15 +95,13 @@ public abstract class Connector implements IConnector
 		columns.clear();
 		rows.clear();
 
-		Statement stmt = null;
 		ResultSet rs = null;
 
-		try (Connection conn = DriverManager.getConnection(getConnString(), properties))
+		try (Connection conn = DriverManager.getConnection(getConnString(), properties); Statement stmt = conn.createStatement())
 		{
 			// hack for read-only query
 			conn.setAutoCommit(false);
 
-			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 
 			ResultSetMetaData rmd = rs.getMetaData();
@@ -122,16 +125,6 @@ public abstract class Connector implements IConnector
 			errorCode = e.getErrorCode();
 
 			return false;
-		} finally
-		{
-			if (stmt != null)
-				try
-				{
-					stmt.close();
-				} catch (SQLException e)
-				{
-
-				}
 		}
 
 		return true;

@@ -1,16 +1,15 @@
 package com.zeljic.dbexec;
 
-import javafx.application.Application;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-
 import com.zeljic.dbexec.uil.Loader;
 import com.zeljic.dbexec.utils.Holder;
 import com.zeljic.dbexec.utils.R;
 
+import javafx.application.Application;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+
 public class Boot extends Application
 {
-
 	@Override
 	public void start(Stage stage) throws Exception
 	{
@@ -29,5 +28,4 @@ public class Boot extends Application
 	{
 		launch(args);
 	}
-
 }

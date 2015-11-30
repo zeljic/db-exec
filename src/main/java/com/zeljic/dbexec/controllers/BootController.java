@@ -10,6 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.zeljic.dbexec.cmps.MessageBox;
+import com.zeljic.dbexec.cmps.MessageBox.Type;
+import com.zeljic.dbexec.db.Row;
+import com.zeljic.dbexec.db.connectors.ConnectorItem;
+import com.zeljic.dbexec.db.connectors.IConnector;
+import com.zeljic.dbexec.export.ExportItem;
+import com.zeljic.dbexec.uil.Loader;
+import com.zeljic.dbexec.utils.Holder;
+import com.zeljic.dbexec.utils.R;
+
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleLongProperty;
@@ -29,19 +44,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
-
-import com.zeljic.dbexec.cmps.MessageBox;
-import com.zeljic.dbexec.cmps.MessageBox.Type;
-import com.zeljic.dbexec.db.Row;
-import com.zeljic.dbexec.db.connectors.ConnectorItem;
-import com.zeljic.dbexec.db.connectors.IConnector;
-import com.zeljic.dbexec.export.ExportItem;
-import com.zeljic.dbexec.uil.Loader;
-import com.zeljic.dbexec.utils.Holder;
-import com.zeljic.dbexec.utils.R;
 
 public class BootController implements Initializable
 {
@@ -71,6 +73,8 @@ public class BootController implements Initializable
 
 	private SimpleBooleanProperty isRunning = new SimpleBooleanProperty(false);
 	private SimpleLongProperty executionTime = new SimpleLongProperty(0);
+
+	private final Logger logger = LogManager.getLogger();
 
 	@Override
 	public void initialize(URL url, ResourceBundle bundle)
@@ -205,7 +209,7 @@ public class BootController implements Initializable
 					baos.writeTo(fos);
 				} catch (Exception e)
 				{
-
+					logger.error(e);
 				}
 
 			}).start();
@@ -228,7 +232,7 @@ public class BootController implements Initializable
 					fileContent = FileUtils.readFileToString(f, Charset.forName("UTF-8"));
 				} catch (IOException e)
 				{
-					e.printStackTrace();
+					logger.error(e);
 				}
 
 				setQuery(fileContent);
@@ -253,7 +257,7 @@ public class BootController implements Initializable
 					FileUtils.writeStringToFile(f, query, Charset.forName("UTF-8"));
 				} catch (IOException e)
 				{
-					e.printStackTrace();
+					logger.error(e);
 				}
 			}).start();
 		}

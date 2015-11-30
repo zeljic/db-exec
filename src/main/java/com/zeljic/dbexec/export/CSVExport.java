@@ -6,25 +6,30 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
-import au.com.bytecode.opencsv.CSVWriter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.zeljic.dbexec.db.Row;
 
+import au.com.bytecode.opencsv.CSVWriter;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
+
 public class CSVExport implements IExport
 {
+	private final Logger logger = LogManager.getLogger();
+
 	@Override
 	public ByteArrayOutputStream export(List<String[]> list)
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-		try(CSVWriter writter = new CSVWriter(new OutputStreamWriter(baos), ','))
+		try (CSVWriter writter = new CSVWriter(new OutputStreamWriter(baos), ','))
 		{
 			writter.writeAll(list);
 		} catch (IOException e)
 		{
-			e.printStackTrace();
+			logger.error(e);
 		}
 
 		return baos;
@@ -46,7 +51,7 @@ public class CSVExport implements IExport
 
 			List<String> l = new ArrayList<>();
 
-			for(int i = 0, size = r.getSize(); i < size; i++)
+			for (int i = 0, size = r.getSize(); i < size; i++)
 				l.add(r.getData(i).getValue());
 
 			list.add(l.toArray(new String[l.size()]));

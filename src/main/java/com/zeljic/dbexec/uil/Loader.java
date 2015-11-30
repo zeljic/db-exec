@@ -5,17 +5,17 @@ import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import org.apache.log4j.Logger;
-
 public class Loader
 {
-
 	private URL _path;
 	private Stage _stage;
 	private Scene _scene;
@@ -23,6 +23,8 @@ public class Loader
 	private Node _mainNode;
 
 	private static Map<String, Loader> _loaders = new LinkedHashMap<String, Loader>();
+
+	private static Logger logger = LogManager.getLogger();
 
 	protected Loader(String name, Stage stage, URL path)
 	{
@@ -37,7 +39,7 @@ public class Loader
 			_scene = new Scene((Parent) _mainNode);
 		} catch (IOException e)
 		{
-			Logger.getLogger(getClass()).warn(e);
+			logger.error(e);
 		}
 	}
 
