@@ -202,9 +202,7 @@ public class BootController implements Initializable
 
 		if (f != null)
 			new Thread(() -> {
-				ByteArrayOutputStream baos = cmbExport.getValue().getExporter().export(tvMain.getColumns(), tvMain.getItems());
-
-				try (FileOutputStream fos = new FileOutputStream(f))
+				try (FileOutputStream fos = new FileOutputStream(f); ByteArrayOutputStream baos = cmbExport.getValue().getExporter().export(tvMain.getColumns(), tvMain.getItems()))
 				{
 					baos.writeTo(fos);
 				} catch (Exception e)
