@@ -24,7 +24,7 @@ public class CSVExport implements IExport
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-		try (CSVWriter writter = new CSVWriter(new OutputStreamWriter(baos), ','))
+		try (OutputStreamWriter osw = new OutputStreamWriter(baos); CSVWriter writter = new CSVWriter(osw, ','))
 		{
 			writter.writeAll(list);
 		} catch (IOException e)

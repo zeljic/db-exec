@@ -4,12 +4,12 @@ import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import com.zeljic.dbexec.db.connectors.IConnector;
+import com.zeljic.dbexec.db.connectors.MySQLConnector;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-
-import com.zeljic.dbexec.db.connectors.IConnector;
-import com.zeljic.dbexec.db.connectors.MySQLConnector;
 
 public class MySQLController implements Initializable, IConnectorController
 {
@@ -36,8 +36,6 @@ public class MySQLController implements Initializable, IConnectorController
 		sb.append("/").append(txtDatabase.getText());
 
 		connector.setConnString(sb.toString());
-
-		System.out.println(sb.toString());
 
 		Properties props = new Properties();
 		props.setProperty("user", txtUsername.getText());

@@ -24,7 +24,7 @@ public abstract class Connector implements IConnector
 	private List<String> columns = new ArrayList<String>();
 	private List<Row> rows = new ArrayList<Row>();
 	private Properties properties = new Properties();
-	
+
 	private final Logger logger = LogManager.getLogger();
 
 	@Override
@@ -95,29 +95,28 @@ public abstract class Connector implements IConnector
 		columns.clear();
 		rows.clear();
 
-		ResultSet rs = null;
-
 		try (Connection conn = DriverManager.getConnection(getConnString(), properties); Statement stmt = conn.createStatement())
 		{
 			// hack for read-only query
 			conn.setAutoCommit(false);
 
-			rs = stmt.executeQuery(query);
-
-			ResultSetMetaData rmd = rs.getMetaData();
-			int size = rmd.getColumnCount();
-
-			for (int i = 0; i < size; i++)
-				columns.add(rmd.getColumnLabel(i + 1));
-
-			while (rs.next())
+			try (ResultSet rs = stmt.executeQuery(query))
 			{
-				Row row = new Row();
+				ResultSetMetaData rmd = rs.getMetaData();
+				int size = rmd.getColumnCount();
 
 				for (int i = 0; i < size; i++)
-					row.setData(i, rs.getString(i + 1));
+					columns.add(rmd.getColumnLabel(i + 1));
 
-				rows.add(row);
+				while (rs.next())
+				{
+					Row row = new Row();
+
+					for (int i = 0; i < size; i++)
+						row.setData(i, rs.getString(i + 1));
+
+					rows.add(row);
+				}
 			}
 		} catch (SQLException e)
 		{
