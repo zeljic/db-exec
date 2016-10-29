@@ -4,6 +4,6 @@ public class MySQLConnector extends Connector
 {
 	public MySQLConnector()
 	{
-		setClassName("com.mysql.jdbc.Driver");
+		setClassName("com.mysql.cj.jdbc.Driver");
 	}
 }
