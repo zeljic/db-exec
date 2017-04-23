@@ -7,23 +7,23 @@ import com.zeljic.dbexec.db.Row;
 
 public interface IConnector
 {
-	public boolean executeQuery(String query);
+	boolean executeQuery(String query);
 
-	public String getErrorMessage();
+	String getErrorMessage();
 
-	public int getErrorCode();
+	int getErrorCode();
 
-	public List<String> getColumns();
+	List<String> getColumns();
 
-	public List<Row> getRows();
+	List<Row> getRows();
 
-	public String getClassName();
+	String getClassName();
 
-	public void setClassName(String className);
+	void setClassName(String className);
 
-	public String getConnString();
+	String getConnString();
 
-	public void setConnString(String connString);
+	void setConnString(String connString);
 
-	public void setProperties(Properties properties);
+	void setProperties(Properties properties);
 }

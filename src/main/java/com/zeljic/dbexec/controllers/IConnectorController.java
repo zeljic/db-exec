@@ -4,5 +4,5 @@ import com.zeljic.dbexec.db.connectors.IConnector;
 
 public interface IConnectorController
 {
-	public IConnector getConnector();
+	IConnector getConnector();
 }

@@ -22,7 +22,7 @@ public class Loader
 	private FXMLLoader _loader;
 	private Node _mainNode;
 
-	private static Map<String, Loader> _loaders = new LinkedHashMap<String, Loader>();
+	private static Map<String, Loader> _loaders = new LinkedHashMap<>();
 
 	private static Logger logger = LogManager.getLogger();
 

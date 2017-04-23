@@ -8,7 +8,7 @@ import javafx.beans.property.StringProperty;
 
 public class Row
 {
-	private Map<Integer, String> store = new LinkedHashMap<Integer, String>();
+	private Map<Integer, String> store = new LinkedHashMap<>();
 
 	public void setData(int columnIdx, String value)
 	{

@@ -21,8 +21,8 @@ public abstract class Connector implements IConnector
 	private String connString = "";
 	private String errorMessage = "";
 	private int errorCode = 0;
-	private List<String> columns = new ArrayList<String>();
-	private List<Row> rows = new ArrayList<Row>();
+	private List<String> columns = new ArrayList<>();
+	private List<Row> rows = new ArrayList<>();
 	private Properties properties = new Properties();
 
 	private final Logger logger = LogManager.getLogger();
@@ -87,7 +87,7 @@ public abstract class Connector implements IConnector
 	public void setProperties(Properties properties)
 	{
 		this.properties = properties;
-	};
+	}
 
 	@Override
 	public boolean executeQuery(String query)

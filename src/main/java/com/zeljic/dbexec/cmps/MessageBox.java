@@ -32,9 +32,7 @@ public class MessageBox
 
 	protected MessageBox()
 	{
-		Platform.runLater(() -> {
-			loader = Loader.setInstance(Holder.MESSAGEBOX, R.get("/fxml/MessageBox.fxml"));
-		});
+		Platform.runLater(() -> loader = Loader.setInstance(Holder.MESSAGEBOX, R.get("/fxml/MessageBox.fxml")));
 	}
 
 	public static MessageBox getInstance()

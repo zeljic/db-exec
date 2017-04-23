@@ -102,38 +102,20 @@ public class BootController implements Initializable
 		cmbExport.itemsProperty().set(ExportItem.getExporterList());
 		cmbExport.setValue(cmbExport.getItems().get(0));
 
-		isRunning.addListener((value, oldv, newv) -> {
-			Platform.runLater(() -> {
-				btnCancel.disableProperty().set(!newv);
-				btnExecute.disableProperty().set(newv);
+		isRunning.addListener((value, oldv, newv) -> Platform.runLater(() -> {
+            btnCancel.disableProperty().set(!newv);
+            btnExecute.disableProperty().set(newv);
 
-				lblStatus.setText(newv ? "Working" : "Ready");
-			});
-		});
+            lblStatus.setText(newv ? "Working" : "Ready");
+        }));
 
 		// add listeners for change columns and rows of table
-		tvMain.getColumns().addListener(new ListChangeListener<TableColumn<?, ?>>() {
-			@Override
-			public void onChanged(javafx.collections.ListChangeListener.Change<? extends TableColumn<?, ?>> c)
-			{
-				lblColumns.setText(String.valueOf(tvMain.getColumns().size()));
-			}
-		});
+		tvMain.getColumns().addListener((ListChangeListener<TableColumn<?, ?>>) c -> lblColumns.setText(String.valueOf(tvMain.getColumns().size())));
 
-		tvMain.getItems().addListener(new ListChangeListener<Row>() {
-			@Override
-			public void onChanged(javafx.collections.ListChangeListener.Change<? extends Row> c)
-			{
-				lblRows.setText(String.valueOf(tvMain.getItems().size()));
-			}
-		});
+		tvMain.getItems().addListener((ListChangeListener<Row>) c -> lblRows.setText(String.valueOf(tvMain.getItems().size())));
 
 		// add listener for execution time
-		executionTime.addListener((value, oldv, newv) -> {
-			Platform.runLater(() -> {
-				lblExecutionTime.setText(String.valueOf(newv));
-			});
-		});
+		executionTime.addListener((value, oldv, newv) -> Platform.runLater(() -> lblExecutionTime.setText(String.valueOf(newv))));
 	}
 
 	@FXML
@@ -166,12 +148,12 @@ public class BootController implements Initializable
 			}
 
 			List<String> columns = connector.getColumns();
-			List<TableColumn<Row, String>> tableColumns = new ArrayList<TableColumn<Row, String>>();
+			List<TableColumn<Row, String>> tableColumns = new ArrayList<>();
 
 			for (int i = 0, size = columns.size(); i < size; i++)
 			{
 				final int fi = i;
-				TableColumn<Row, String> column = new TableColumn<Row, String>(columns.get(i));
+				TableColumn<Row, String> column = new TableColumn<>(columns.get(i));
 
 				column.setCellValueFactory(data -> data.getValue().getData(fi));
 				tableColumns.add(column);
@@ -268,8 +250,6 @@ public class BootController implements Initializable
 
 	private void setQuery(String query)
 	{
-		Platform.runLater(() -> {
-			wvMain.getEngine().executeScript("editor.setValue('" + StringEscapeUtils.escapeEcmaScript(query) + "');");
-		});
+		Platform.runLater(() -> wvMain.getEngine().executeScript("editor.setValue('" + StringEscapeUtils.escapeEcmaScript(query) + "');"));
 	}
 }

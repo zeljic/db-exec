@@ -38,12 +38,10 @@ public class CSVExport implements IExport
 	@Override
 	public ByteArrayOutputStream export(ObservableList<TableColumn<Row, ?>> columns, ObservableList<Row> rows)
 	{
-		List<String[]> list = new ArrayList<String[]>();
-		List<String> cList = new ArrayList<String>();
+		List<String[]> list = new ArrayList<>();
+		List<String> cList = new ArrayList<>();
 
-		columns.forEach(c -> {
-			cList.add(c.getText());
-		});
+		columns.forEach(c -> cList.add(c.getText()));
 
 		list.add(cList.toArray(new String[columns.size()]));
 
