@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.web.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="200.0" minWidth="-Infinity" prefHeight="603.0" prefWidth="800.0" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeljic.dbexec.controllers.BootController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="200.0" minWidth="-Infinity" prefHeight="603.0" prefWidth="800.0" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeljic.dbexec.controllers.BootController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -17,7 +26,7 @@
                            <children>
                               <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
                                  <children>
-                                    <Label text="Select Connector:" />
+                                    <Label text="Connector:" />
                                     <ComboBox fx:id="cmbConnector" minWidth="100.0" HBox.hgrow="NEVER" />
                                  </children>
                               </HBox>
@@ -37,7 +46,7 @@
               <items>
                 <AnchorPane minHeight="110.0">
                      <children>
-                        <TitledPane animated="false" collapsible="false" text="SQL Query" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TitledPane animated="false" collapsible="false" text="Query" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
                               <VBox>
                                  <children>
@@ -47,7 +56,7 @@
                                           <Button fx:id="btnScriptSave" mnemonicParsing="false" onAction="#onActionBtnScriptSave" text="Save" />
                                           <Button fx:id="btnClear" mnemonicParsing="false" onAction="#onActionBtnClear" text="Clear" />
                                           <Pane HBox.hgrow="ALWAYS" />
-                                          <Button fx:id="btnExecute" mnemonicParsing="false" onAction="#onActionBtnExecute" text="Execute Query" />
+                                          <Button fx:id="btnExecute" mnemonicParsing="false" onAction="#onActionBtnExecute" text="Execute" />
                                           <Button fx:id="btnCancel" disable="true" mnemonicParsing="false" onAction="#onActionBtnCancel" text="Cancel" />
                                        </children>
                                        <VBox.margin>
