@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -84,7 +84,8 @@ public class BootController implements Initializable
 		// initialize cmbConnector
 		cmbConnector.itemsProperty().set(ConnectorItem.getConnectorList());
 
-		cmbConnector.valueProperty().addListener((value, oldv, newv) -> {
+		cmbConnector.valueProperty().addListener((value, oldv, newv) ->
+		{
 			ObservableList<Node> children = vbHolder.getChildren();
 
 			if (children.size() > 1)
@@ -102,12 +103,13 @@ public class BootController implements Initializable
 		cmbExport.itemsProperty().set(ExportItem.getExporterList());
 		cmbExport.setValue(cmbExport.getItems().get(0));
 
-		isRunning.addListener((value, oldv, newv) -> Platform.runLater(() -> {
-            btnCancel.disableProperty().set(!newv);
-            btnExecute.disableProperty().set(newv);
+		isRunning.addListener((value, oldv, newv) -> Platform.runLater(() ->
+		{
+			btnCancel.disableProperty().set(!newv);
+			btnExecute.disableProperty().set(newv);
 
-            lblStatus.setText(newv ? "Working" : "Ready");
-        }));
+			lblStatus.setText(newv ? "Working" : "Ready");
+		}));
 
 		// add listeners for change columns and rows of table
 		tvMain.getColumns().addListener((ListChangeListener<TableColumn<?, ?>>) c -> lblColumns.setText(String.valueOf(tvMain.getColumns().size())));
@@ -138,7 +140,8 @@ public class BootController implements Initializable
 
 		isRunning.set(true);
 
-		new Thread(() -> {
+		new Thread(() ->
+		{
 
 			if (!connector.executeQuery(query))
 			{
@@ -160,7 +163,8 @@ public class BootController implements Initializable
 			}
 
 			if (isRunning.get())
-				Platform.runLater(() -> {
+				Platform.runLater(() ->
+				{
 					tvMain.getColumns().addAll(tableColumns);
 					tvMain.getItems().addAll(connector.getRows());
 					isRunning.set(false);
@@ -183,7 +187,8 @@ public class BootController implements Initializable
 		File f = fc.showSaveDialog(Loader.getInstance(Holder.BOOT).getStage());
 
 		if (f != null)
-			new Thread(() -> {
+			new Thread(() ->
+			{
 				try (FileOutputStream fos = new FileOutputStream(f); ByteArrayOutputStream baos = cmbExport.getValue().getExporter().export(tvMain.getColumns(), tvMain.getItems()))
 				{
 					baos.writeTo(fos);
@@ -204,7 +209,8 @@ public class BootController implements Initializable
 		File f = fc.showOpenDialog(Loader.getInstance(Holder.BOOT).getStage());
 
 		if (f != null)
-			new Thread(() -> {
+			new Thread(() ->
+			{
 				String fileContent = "";
 
 				try
@@ -231,7 +237,8 @@ public class BootController implements Initializable
 		{
 			final String query = getQuery().trim();
 
-			new Thread(() -> {
+			new Thread(() ->
+			{
 				try
 				{
 					FileUtils.writeStringToFile(f, query, Charset.forName("UTF-8"));

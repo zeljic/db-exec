@@ -16,27 +16,25 @@ import javafx.stage.Stage;
 
 public class Loader
 {
-	private URL _path;
-	private Stage _stage;
-	private Scene _scene;
-	private FXMLLoader _loader;
-	private Node _mainNode;
+	private Stage stage;
+	private Scene scene;
+	private FXMLLoader loader;
+	private Node mainNode;
 
 	private static Map<String, Loader> _loaders = new LinkedHashMap<>();
 
 	private static Logger logger = LogManager.getLogger();
 
-	protected Loader(String name, Stage stage, URL path)
+	private Loader(Stage stage, URL path)
 	{
-		_path = path;
-		_stage = stage;
+		this.stage = stage;
 
-		_loader = new FXMLLoader(_path);
+		loader = new FXMLLoader(path);
 
 		try
 		{
-			_mainNode = _loader.load();
-			_scene = new Scene((Parent) _mainNode);
+			mainNode = loader.load();
+			scene = new Scene((Parent) mainNode);
 		} catch (IOException e)
 		{
 			logger.error(e);
@@ -45,7 +43,7 @@ public class Loader
 
 	public static Loader setInstance(String name, Stage stage, URL path)
 	{
-		Loader tmp = new Loader(name, stage, path);
+		Loader tmp = new Loader(stage, path);
 		_loaders.put(name, tmp);
 
 		return tmp;
@@ -63,32 +61,32 @@ public class Loader
 
 	public <T> T getController(Class<T> clazz)
 	{
-		return clazz.cast(_loader.getController());
+		return clazz.cast(loader.getController());
 	}
 
 	public void setStage(Stage stage)
 	{
-		_stage = stage;
+		this.stage = stage;
 	}
 
 	public Stage getStage()
 	{
-		return _stage;
+		return stage;
 	}
 
 	public Scene getScene()
 	{
-		return _scene;
+		return scene;
 	}
 
 	public Node getNode()
 	{
-		return _mainNode;
+		return mainNode;
 	}
 
 	public Object getRawController()
 	{
-		return _loader.getController();
+		return loader.getController();
 	}
 
 	public <T> T lookup(String selector, Class<T> clazz)

@@ -10,7 +10,7 @@ public class ExportItem
 		CSV, PDF
 	}
 
-	private String display = "";
+	private String display;
 	private Type type;
 	private IExport exporter;
 	private static ObservableList<ExportItem> register = FXCollections.observableArrayList();

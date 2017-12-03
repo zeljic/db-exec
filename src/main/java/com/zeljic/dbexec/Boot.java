@@ -2,16 +2,15 @@ package com.zeljic.dbexec;
 
 import java.io.InputStream;
 
+import javafx.application.Application;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.zeljic.dbexec.uil.Loader;
 import com.zeljic.dbexec.utils.Holder;
 import com.zeljic.dbexec.utils.R;
-
-import javafx.application.Application;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
 public class Boot extends Application
 {
@@ -26,7 +25,7 @@ public class Boot extends Application
 		stage.setMinWidth(800);
 		stage.setMinHeight(500);
 
-		try (InputStream icon = R.getAsStream("/gfx/icon.png"))
+		try (final InputStream icon = R.getAsStream("/gfx/icon.png"))
 		{
 			stage.getIcons().add(new Image(icon));
 		} catch (Exception e)
