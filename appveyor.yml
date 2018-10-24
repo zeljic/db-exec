@@ -4,16 +4,16 @@ environment:
   JAVA_HOME: c:\jdk-11.0.1
 install:
   - ps: |
-    Add-Type -AssemblyName System.IO.Compression.FileSystem
-    if (!(Test-Path -Path "C:\maven" )) {
-      (new-object System.Net.WebClient).DownloadFile('https://www-eu.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.zip', 'C:\maven-bin.zip')
-      [System.IO.Compression.ZipFile]::ExtractToDirectory("C:\maven-bin.zip", "C:\maven")
-    }
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
+        if (!(Test-Path -Path "C:\maven" )) {
+            (new-object System.Net.WebClient).DownloadFile('https://www-eu.apache.org/dist/maven/maven-3/3.5.4/binaries/apache-maven-3.5.4-bin.zip', 'C:\maven-bin.zip')
+            [System.IO.Compression.ZipFile]::ExtractToDirectory("C:\maven-bin.zip", "C:\maven")
+        }
 
-    if (!(Test-Path -Path "C:\jdk-11.0.1" )) {
-      (new-object net.webclient).DownloadFile('https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_windows-x64_bin.zip', 'C:\openjdk-11.0.1_windows-x64_bin.zip')
-      [System.IO.Compression.ZipFile]::ExtractToDirectory('C:\openjdk-11.0.1_windows-x64_bin.zip', "C:\")
-    }
+        if (!(Test-Path -Path "C:\jdk-11.0.1" )) {
+            (new-object net.webclient).DownloadFile('https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_windows-x64_bin.zip', 'C:\openjdk-11.0.1_windows-x64_bin.zip')
+            [System.IO.Compression.ZipFile]::ExtractToDirectory('C:\openjdk-11.0.1_windows-x64_bin.zip', "C:\")
+        }
   - cmd: SET PATH=C:\maven\apache-maven-3.5.4\bin;%JAVA_HOME%\bin;%PATH%
 build_script:
   - mvn clean package
