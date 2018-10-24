@@ -1,6 +1,6 @@
 before_install: java -version
 language: java
 jdk:
-  - oraclejdk8
+  - openjdk11
 install:
   - mvn clean package
