@@ -9,10 +9,11 @@ Windows build: [![Build status](https://ci.appveyor.com/api/projects/status/gn4b
 
 ### Requirements
 You need Java and Maven on your machine to build and run DB-Exec.  
-JDK8 and Maven 3 should work just fine.
+JDK11 and Maven 3.5.4 should work just fine.
+
 ###Download requirements:
-- Java 8 [Download Java JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-- Maven 3 [Download Maven](http://maven.apache.org/download.cgi)
+- Java 11 [Download Java JDK](https://jdk.java.net/11/)
+- Maven 3.5.4 [Download Maven](https://maven.apache.org/download.cgi)
 
 ### How to build executable
 Clone source and build .jar file
@@ -24,5 +25,5 @@ mvn clean package
 
 Run .jar executable
 ```bash
-java -jar "target/DB Exec v.0.0.2-jar-with-dependencies.jar"
+java -jar "target/DB Exec v.0.0.3-jar-with-dependencies.jar"
 ```
