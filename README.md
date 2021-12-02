@@ -9,7 +9,7 @@ Windows build: [![Build status](https://ci.appveyor.com/api/projects/status/gn4b
 
 ### Requirements
 You need Java and Maven on your machine to build and run DB-Exec.  
-JDK11 and Maven 3.5.4 should work just fine.
+JDK14 and Maven 3.8.4 should work just fine.
 
 ### Download requirements:
 - Java 14 [Download Java JDK](https://openjdk.java.net/projects/jdk/14/)
