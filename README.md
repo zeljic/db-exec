@@ -12,18 +12,13 @@ You need Java and Maven on your machine to build and run DB-Exec.
 JDK11 and Maven 3.5.4 should work just fine.
 
 ### Download requirements:
-- Java 11 [Download Java JDK](https://jdk.java.net/11/)
-- Maven 3.5.4 [Download Maven](https://maven.apache.org/download.cgi)
+- Java 14 [Download Java JDK](https://openjdk.java.net/projects/jdk/14/)
+- Maven 3.8.4 [Download Maven](https://maven.apache.org/download.cgi)
+
+### How to run DB-Exec
+- Download the latest version of DB-Exec from [GitHub](https://github.com/zeljic/db-exec)
+- Run maven command: `mvn clean javafx:run`
+- Enjoy!
 
 ### How to build executable
-Clone source and build .jar file
-```bash
-git clone --depth 1 https://github.com/zeljic/db-exec.git
-cd db-exec
-mvn clean package
-```
-
-Run .jar executable
-```bash
-java -jar "target/DB Exec v.0.0.3-jar-with-dependencies.jar"
-```
+- WiP
