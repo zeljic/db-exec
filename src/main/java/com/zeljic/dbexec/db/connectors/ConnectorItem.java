@@ -11,7 +11,7 @@ public class ConnectorItem
 {
 	public enum Type
 	{
-		SQLite3, MySQL
+		SQLite3, MySQL, JDBC
 	}
 
 	private String display;
@@ -25,6 +25,7 @@ public class ConnectorItem
 	{
 		register.add(new ConnectorItem(ConnectorItem.Type.SQLite3, "SQLite 3", "/fxml/ConnectorSQLite3.fxml"));
 		register.add(new ConnectorItem(ConnectorItem.Type.MySQL, "MySQL", "/fxml/ConnectorMySQL.fxml"));
+		register.add(new ConnectorItem(ConnectorItem.Type.JDBC, "JDBC URL", "/fxml/ConnectorJDBC.fxml"));
 	}
 
 	public ConnectorItem(Type type, String display, String fxmlPath)
